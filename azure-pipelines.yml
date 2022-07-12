@@ -1,0 +1,22 @@
+name: $(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)
+   
+trigger:
+  - master
+  - feature/*
+  - bug/*
+
+pool:
+    vmImage: windows-latest
+
+variables:
+- name: project_title
+  value: 'AzureFunctions.Api'
+  
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - template: build-dotnet-core-package.yml
+    parameters:
+      jobTitle: 'Build_Functions_Sites_API'
+      project_title: $(project_title)
